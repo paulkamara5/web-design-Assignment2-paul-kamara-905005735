@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TasteHub — Good Food. Great Vibes.</title>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            charcoal: '#1E1E1E',
+            charcoalHover: '#333333',
+            barGray: '#EBEBEB',
+            terracotta: '#C85A32',
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-white text-charcoal font-sans antialiased min-h-screen flex flex-col selection:bg-charcoal selection:text-white">
+
+  <!-- ==================== GLOBAL STICKY HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-barGray/95 backdrop-blur-sm border-b border-neutral-300">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Left: Brand Logo -->
+      <a href="#home" data-nav="home" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-charcoal hover:opacity-80 transition-opacity flex items-center gap-2">
+        <span>TasteHub</span>
+      </a>
+
+      <!-- Center: Desktop Navigation Links -->
+      <nav aria-label="Primary Navigation" class="hidden md:flex items-center space-x-7 lg:space-x-9">
+        <button type="button" data-nav="home" class="nav-link relative py-1.5 text-sm font-medium text-neutral-700 hover:text-charcoal transition-colors">
+          Home
+          <span class="nav-underline absolute left-0 right-0 bottom-0 h-[2.5px] bg-charcoal rounded-full transition-transform duration-200 scale-x-0"></span>
+        </button>
+        <button type="button" data-nav="menu" class="nav-link relative py-1.5 text-sm font-medium text-neutral-700 hover:text-charcoal transition-colors">
+          Menu
+          <span class="nav-underline absolute left-0 right-0 bottom-0 h-[2.5px] bg-charcoal rounded-full transition-transform duration-200 scale-x-0"></span>
+        </button>
+        <button type="button" data-nav="about" class="nav-link relative py-1.5 text-sm font-medium text-neutral-700 hover:text-charcoal transition-colors">
+          About
+          <span class="nav-underline absolute left-0 right-0 bottom-0 h-[2.5px] bg-charcoal rounded-full transition-transform duration-200 scale-x-0"></span>
+        </button>
+        <button type="button" data-nav="reservations" class="nav-link relative py-1.5 text-sm font-medium text-neutral-700 hover:text-charcoal transition-colors">
+          Reservations
+          <span class="nav-underline absolute left-0 right-0 bottom-0 h-[2.5px] bg-charcoal rounded-full transition-transform duration-200 scale-x-0"></span>
+        </button>
+        <button type="button" data-nav="contact" class="nav-link relative py-1.5 text-sm font-medium text-neutral-700 hover:text-charcoal transition-colors">
+          Contact
+          <span class="nav-underline absolute left-0 right-0 bottom-0 h-[2.5px] bg-charcoal rounded-full transition-transform duration-200 scale-x-0"></span>
+        </button>
+      </nav>
+
+      <!-- Right: Book a Table CTA & Mobile Menu Toggle -->
+      <div class="flex items-center gap-3">
+        <button type="button" data-nav="reservations" class="bg-charcoal hover:bg-charcoalHover active:scale-[0.99] text-white text-sm font-semibold px-5 py-2.5 rounded-lg shadow-sm transition-all cursor-pointer">
+          Book a Table
+        </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" aria-expanded="false" class="md:hidden p-2.5 rounded-lg text-charcoal hover:bg-neutral-300/60 transition-colors">
+          <svg id="icon-menu-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="icon-menu-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden bg-barGray border-t border-neutral-300 px-4 pt-2 pb-4 space-y-1">
+      <button type="button" data-nav="home" class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-neutral-700 hover:bg-neutral-200/70">Home</button>
+      <button type="button" data-nav="menu" class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-neutral-700 hover:bg-neutral-200/70">Menu</button>
+      <button type="button" data-nav="about" class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-neutral-700 hover:bg-neutral-200/70">About</button>
+      <button type="button" data-nav="reservations" class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-neutral-700 hover:bg-neutral-200/70">Reservations</button>
+      <button type="button" data-nav="contact" class="mobile-nav-link block w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-neutral-700 hover:bg-neutral-200/70">Contact</button>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN VIEW CONTAINER ==================== -->
+  <main class="flex-1 flex flex-col">
+
+    <!-- ============================================================ -->
+    <!-- PAGE 1: HOME PAGE                                            -->
+    <!-- ============================================================ -->
+    <section id="page-home" class="page-view flex-1 flex flex-col justify-between">
+      <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-14">
+        
+        <!-- Hero 2-Column Split -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <!-- Left Column: Copy & CTA -->
+          <div class="space-y-5">
+            <h1 class="text-4xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-charcoal leading-[1.08]">
+              Good Food.<br />Great Vibes.
+            </h1>
+            <p class="text-lg sm:text-xl text-neutral-700 font-normal">
+              Enjoy delicious meals.
+            </p>
+            <div class="pt-1">
+              <button type="button" data-nav="menu" class="bg-charcoal hover:bg-charcoalHover active:scale-[0.99] text-white font-semibold text-base px-8 py-3.5 rounded-lg shadow-sm transition-all cursor-pointer">
+                View Menu
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Hero Food Photography -->
+          <div class="w-full">
+            <div class="aspect-[16/10] w-full rounded-xl overflow-hidden border border-neutral-200 shadow-sm bg-neutral-100">
+              <img
+                src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=1000&q=80"
+                alt="Flavorful West African Jollof Rice platter with grilled meats"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x500/EAEAEA/1E1E1E?text=TasteHub+Signature+Feast';"
+                class="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Popular Dishes Section -->
+        <div class="space-y-7 pt-2">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-center text-charcoal tracking-tight">
+            Popular Dishes
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+            <!-- Card 1: Jollof Rice -->
+            <div data-nav="menu" class="group cursor-pointer text-center space-y-3">
+              <div class="aspect-[16/10] w-full rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+                <img
+                  src="https://images.unsplash.com/photo-1664992960082-0ea299a9c53e?auto=format&fit=crop&w=700&q=80"
+                  alt="Smoky Jollof Rice"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x380/EAEAEA/1E1E1E?text=Jollof+Rice';"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-charcoal group-hover:text-terracotta transition-colors">
+                Jollof Rice
+              </h3>
+            </div>
+
+            <!-- Card 2: Grilled Chicken -->
+            <div data-nav="menu" class="group cursor-pointer text-center space-y-3">
+              <div class="aspect-[16/10] w-full rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+                <img
+                  src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=700&q=80"
+                  alt="Charcoal Grilled Chicken"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x380/EAEAEA/1E1E1E?text=Grilled+Chicken';"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-charcoal group-hover:text-terracotta transition-colors">
+                Grilled Chicken
+              </h3>
+            </div>
+
+            <!-- Card 3: Fried Rice -->
+            <div data-nav="menu" class="group cursor-pointer text-center space-y-3">
+              <div class="aspect-[16/10] w-full rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+                <img
+                  src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=700&q=80"
+                  alt="Special Fried Rice"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x380/EAEAEA/1E1E1E?text=Fried+Rice';"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-charcoal group-hover:text-terracotta transition-colors">
+                Fried Rice
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Footer Bar -->
+      <footer class="bg-barGray border-t border-neutral-300 py-5 px-4 text-center">
+        <p class="text-sm sm:text-base font-medium text-charcoal">Taste Better. Live Happier.</p>
+      </footer>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 2: MENU PAGE                                            -->
+    <!-- ============================================================ -->
+    <section id="page-menu" class="page-view hidden flex-1 flex flex-col justify-between">
+      <div class="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
+        
+        <!-- Centered Header -->
+        <div class="text-center space-y-2.5">
+          <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-charcoal">
+            Our Menu
+          </h1>
+          <p class="text-base sm:text-lg text-neutral-700">
+            Delicious meals for every taste.
+          </p>
+        </div>
+
+        <!-- 2x2 Grid of Horizontal Menu Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 pt-2">
+          
+          <!-- Item 1: Jollof Rice -->
+          <div class="flex items-center gap-5 sm:gap-6 p-3 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-200">
+            <div class="w-36 sm:w-44 aspect-[16/11] shrink-0 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1664992960082-0ea299a9c53e?auto=format&fit=crop&w=600&q=80"
+                alt="Jollof Rice"
+                onerror="this.onerror=null;this.src='https://placehold.co/400x280/EAEAEA/1E1E1E?text=Jollof+Rice';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="space-y-1.5">
+              <h2 class="text-lg sm:text-xl font-bold text-charcoal">Jollof Rice</h2>
+              <p class="text-lg sm:text-xl font-bold text-charcoal">Le 120</p>
+            </div>
+          </div>
+
+          <!-- Item 2: Grilled Chicken -->
+          <div class="flex items-center gap-5 sm:gap-6 p-3 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-200">
+            <div class="w-36 sm:w-44 aspect-[16/11] shrink-0 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80"
+                alt="Grilled Chicken"
+                onerror="this.onerror=null;this.src='https://placehold.co/400x280/EAEAEA/1E1E1E?text=Grilled+Chicken';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="space-y-1.5">
+              <h2 class="text-lg sm:text-xl font-bold text-charcoal">Grilled Chicken</h2>
+              <p class="text-lg sm:text-xl font-bold text-charcoal">Le 150</p>
+            </div>
+          </div>
+
+          <!-- Item 3: Fried Rice -->
+          <div class="flex items-center gap-5 sm:gap-6 p-3 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-200">
+            <div class="w-36 sm:w-44 aspect-[16/11] shrink-0 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80"
+                alt="Fried Rice"
+                onerror="this.onerror=null;this.src='https://placehold.co/400x280/EAEAEA/1E1E1E?text=Fried+Rice';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="space-y-1.5">
+              <h2 class="text-lg sm:text-xl font-bold text-charcoal">Fried Rice</h2>
+              <p class="text-lg sm:text-xl font-bold text-charcoal">Le 130</p>
+            </div>
+          </div>
+
+          <!-- Item 4: Pepper Soup -->
+          <div class="flex items-center gap-5 sm:gap-6 p-3 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-200">
+            <div class="w-36 sm:w-44 aspect-[16/11] shrink-0 rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=600&q=80"
+                alt="Spicy West African Pepper Soup"
+                onerror="this.onerror=null;this.src='https://placehold.co/400x280/EAEAEA/1E1E1E?text=Pepper+Soup';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="space-y-1.5">
+              <h2 class="text-lg sm:text-xl font-bold text-charcoal">Pepper Soup</h2>
+              <p class="text-lg sm:text-xl font-bold text-charcoal">Le 140</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Menu Footer Bar -->
+      <footer class="bg-barGray border-t border-neutral-300 py-5 px-4 text-center">
+        <p class="text-sm sm:text-base font-medium text-charcoal">Good Food. Great Mood.</p>
+      </footer>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 3: ABOUT PAGE                                           -->
+    <!-- ============================================================ -->
+    <section id="page-about" class="page-view hidden flex-1 flex flex-col justify-between">
+      <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 flex-1 flex flex-col justify-between space-y-14">
+        
+        <!-- Top 2-Column Split -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <!-- Left Side -->
+          <div class="space-y-5">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-charcoal">
+              About Us
+            </h1>
+            <p class="text-lg sm:text-xl text-neutral-700 leading-relaxed max-w-md">
+              At TasteHub, we believe in great food, warm service, and memorable experiences.
+            </p>
+          </div>
+
+          <!-- Right Side: Warm Restaurant Interior Photo -->
+          <div class="w-full">
+            <div class="aspect-[16/10] w-full rounded-xl overflow-hidden border border-neutral-200 shadow-sm bg-neutral-100">
+              <img
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+                alt="Warm and welcoming TasteHub restaurant dining room"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x500/EAEAEA/1E1E1E?text=TasteHub+Dining+Room';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom 3-Column Feature Strip Separated by Vertical Divider Lines -->
+        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x-2 divide-charcoal/80 py-4">
+          <div class="py-6 md:py-8 px-4 flex items-center justify-center text-center">
+            <span class="text-lg sm:text-xl font-medium text-charcoal">Fresh Ingredients</span>
+          </div>
+          <div class="py-6 md:py-8 px-4 flex items-center justify-center text-center">
+            <span class="text-lg sm:text-xl font-medium text-charcoal">Excellent Service</span>
+          </div>
+          <div class="py-6 md:py-8 px-4 flex items-center justify-center text-center">
+            <span class="text-lg sm:text-xl font-medium text-charcoal">A Cozy Atmosphere</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- About Footer Bar -->
+      <footer class="bg-barGray border-t border-neutral-300 py-5 px-4 text-center">
+        <p class="text-sm sm:text-base font-medium text-charcoal">TasteHub – Good Food. Great Vibes.</p>
+      </footer>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 4: RESERVATIONS PAGE                                    -->
+    <!-- ============================================================ -->
+    <section id="page-reservations" class="page-view hidden flex-1 flex flex-col justify-between">
+      <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        
+        <!-- 2-Column Split -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
+          
+          <!-- Left Side: Heading, Subtitle, Vertical Form -->
+          <div class="space-y-6 max-w-md w-full mx-auto md:mx-0">
+            <div class="space-y-2.5">
+              <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-charcoal">
+                Book a Table
+              </h1>
+              <p class="text-base sm:text-lg text-neutral-700 leading-snug">
+                Reserve your table for a memorable dining experience.
+              </p>
+            </div>
+
+            <form id="reservation-form" class="space-y-3.5" novalidate>
+              <div>
+                <label for="res-name" class="sr-only">Name</label>
+                <input
+                  id="res-name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Name"
+                  class="w-full px-4 py-3 rounded-lg border border-neutral-400 text-charcoal placeholder-neutral-500 text-base focus:outline-none focus:ring-2 focus:ring-charcoal focus:border-charcoal transition-shadow"
+                />
+              </div>
+
+              <div>
+                <label for="res-phone" class="sr-only">Phone Number</label>
+                <input
+                  id="res-phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  placeholder="Phone Number"
+                  class="w-full px-4 py-3 rounded-lg border border-neutral-400 text-charcoal placeholder-neutral-500 text-base focus:outline-none focus:ring-2 focus:ring-charcoal focus:border-charcoal transition-shadow"
+                />
+              </div>
+
+              <div>
+                <label for="res-date" class="sr-only">Date</label>
+                <input
+                  id="res-date"
+                  name="date"
+                  type="text"
+                  onfocus="(this.type='date')"
+                  onblur="if(!this.value)this.type='text'"
+                  required
+                  placeholder="Date"
+                  class="w-full px-4 py-3 rounded-lg border border-neutral-400 text-charcoal placeholder-neutral-500 text-base focus:outline-none focus:ring-2 focus:ring-charcoal focus:border-charcoal transition-shadow"
+                />
+              </div>
+
+              <div>
+                <label for="res-time" class="sr-only">Time</label>
+                <input
+                  id="res-time"
+                  name="time"
+                  type="text"
+                  onfocus="(this.type='time')"
+                  onblur="if(!this.value)this.type='text'"
+                  required
+                  placeholder="Time"
+                  class="w-full px-4 py-3 rounded-lg border border-neutral-400 text-charcoal placeholder-neutral-500 text-base focus:outline-none focus:ring-2 focus:ring-charcoal focus:border-charcoal transition-shadow"
+                />
+              </div>
+
+              <div class="pt-1">
+                <button
+                  type="submit"
+                  class="w-full bg-charcoal hover:bg-charcoalHover active:scale-[0.99] text-white font-semibold text-base py-3.5 rounded-lg shadow-sm transition-all cursor-pointer"
+                >
+                  Reserve Now
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right Side: Dining Table / Ambiance Photo -->
+          <div class="w-full">
+            <div class="aspect-[16/11] w-full rounded-xl overflow-hidden border border-neutral-200 shadow-sm bg-neutral-100">
+              <img
+                src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80"
+                alt="Intimate candlelit dining table setting at TasteHub"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x550/EAEAEA/1E1E1E?text=Reserve+Your+Table';"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Reservations Footer Bar -->
+      <footer class="bg-barGray border-t border-neutral-300 py-5 px-4 text-center">
+        <p class="text-sm sm:text-base font-medium text-charcoal">We can't wait to serve you!</p>
+      </footer>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 5: CONTACT PAGE                                         -->
+    <!-- ============================================================ -->
+    <section id="page-contact" class="page-view hidden flex-1 flex flex-col justify-between">
+      <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        
+        <!-- 2-Column Split with Vertical Divider -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          
+          <!-- Left Side: Contact Details (5 cols) -->
+          <div class="md:col-span-5 space-y-7">
+            <div class="space-y-2">
+              <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-charcoal">
+                Contact Us
+              </h1>
+              <p class="text-base sm:text-lg text-neutral-700">
+                Get in touch with us.
+              </p>
+            </div>
+
+            <ul class="space-y-6 pt-1">
+              <!-- Location Pin -->
+              <li class="flex items-start gap-4">
+                <span class="mt-0.5 text-charcoal shrink-0" aria-hidden="true">
+                  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                <span class="text-base sm:text-lg text-charcoal leading-snug">
+                  123 Restaurant Street,<br />Freetown, Sierra Leone
+                </span>
+              </li>
+
+              <!-- Phone Icon -->
+              <li class="flex items-center gap-4">
+                <span class="text-charcoal shrink-0" aria-hidden="true">
+                  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10.5 18.75a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" />
+                    <path fill-rule="evenodd" d="M8.625.75A3.375 3.375 0 005.25 4.125v15.75a3.375 3.375 0 003.375 3.375h6.75a3.375 3.375 0 003.375-3.375V4.125A3.375 3.375 0 0015.375.75h-6.75zM7.5 4.125C7.5 3.504 8.004 3 8.625 3H9.75v.375c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125V3h1.125c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125 1.125h-6.75A1.125 1.125 0 017.5 19.875V4.125z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+                <a href="tel:+23272082475" class="text-base sm:text-lg text-charcoal hover:text-terracotta transition-colors">
+                  +232 72082475
+                </a>
+              </li>
+
+              <!-- Email Icon -->
+              <li class="flex items-center gap-4">
+                <span class="text-charcoal shrink-0" aria-hidden="true">
+                  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+                    <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+                  </svg>
+                </span>
+                <a href="mailto:paulkamara615@gmail.com" class="text-base sm:text-lg text-charcoal hover:text-terracotta transition-colors">
+                  paulkamara615@gmail.com
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Center Vertical Divider Line (Desktop) -->
+          <div class="hidden md:flex md:col-span-1 justify-center self-stretch">
+            <div class="w-[2px] bg-charcoal/80 my-4 rounded-full"></div>
+          </div>
+
+          <!-- Right Side: Embedded Interactive Map of Freetown, Sierra Leone (6 cols) -->
+          <div class="md:col-span-6 w-full">
+            <div class="relative aspect-[16/11] w-full rounded-xl overflow-hidden border border-neutral-300 shadow-sm bg-neutral-100">
+              <iframe
+                title="TasteHub Location Map — Freetown, Sierra Leone"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-13.2650%2C8.4650%2C-13.2100%2C8.4980&amp;layer=mapnik&amp;marker=8.4840%2C-13.2299"
+                class="w-full h-full border-0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <!-- Subtle Location Badge Overlay -->
+              <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm border border-neutral-200 px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-2 pointer-events-none">
+                <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
+                <span class="text-xs font-semibold text-charcoal">TasteHub • Freetown, Sierra Leone</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Contact Footer Bar: 'Follow Us' + 3 Dark Rounded Social Icon Buttons -->
+      <footer class="bg-barGray border-t border-neutral-300 py-5 px-4">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-6">
+          <span class="text-sm sm:text-base font-bold text-charcoal">Follow Us</span>
+          <div class="flex items-center gap-4">
+            <!-- Facebook -->
+            <a href="#contact" aria-label="TasteHub on Facebook" class="social-btn w-10 h-10 rounded-lg bg-charcoal hover:bg-charcoalHover text-white flex items-center justify-center transition-transform hover:-translate-y-0.5 shadow-sm">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#contact" aria-label="TasteHub on Instagram" class="social-btn w-10 h-10 rounded-lg bg-charcoal hover:bg-charcoalHover text-white flex items-center justify-center transition-transform hover:-translate-y-0.5 shadow-sm">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+              </svg>
+            </a>
+            <!-- X / Twitter -->
+            <a href="#contact" aria-label="TasteHub on X" class="social-btn w-10 h-10 rounded-lg bg-charcoal hover:bg-charcoalHover text-white flex items-center justify-center transition-transform hover:-translate-y-0.5 shadow-sm">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ==================== INTERACTIVE NOTIFICATION TOAST ==================== -->
+  <div id="toast-container" role="status" aria-live="polite" class="fixed bottom-6 right-6 z-50 pointer-events-none transform translate-y-4 opacity-0 transition-all duration-300 max-w-sm w-full px-4 sm:px-0">
+    <div id="toast-box" class="bg-charcoal text-white rounded-xl shadow-xl border border-neutral-700 p-4 flex items-start gap-3.5 pointer-events-auto">
+      <div id="toast-icon" class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div class="flex-1 text-sm">
+        <p id="toast-title" class="font-bold text-white">Table Reserved!</p>
+        <p id="toast-message" class="text-neutral-300 mt-0.5 leading-snug"></p>
+      </div>
+      <button id="toast-close" type="button" aria-label="Dismiss notification" class="text-neutral-400 hover:text-white p-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== MINIMAL VANILLA JS ROUTER & INTERACTIVITY ==================== -->
+  <script>
+    (function () {
+      const validPages = ['home', 'menu', 'about', 'reservations', 'contact'];
+      const pageViews = document.querySelectorAll('.page-view');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const iconMenuOpen = document.getElementById('icon-menu-open');
+      const iconMenuClose = document.getElementById('icon-menu-close');
+
+      /**
+       * Switches the active page view, updates header underline indicators,
+       * syncs URL hash, and scrolls smoothly to the top.
+       */
+      function navigateTo(pageId, updateHash = true) {
+        const target = validPages.includes(pageId) ? pageId : 'home';
+
+        // Toggle visibility of the 5 pages
+        pageViews.forEach((section) => {
+          if (section.id === `page-${target}`) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+
+        // Update desktop navigation active state and underline bar
+        navLinks.forEach((btn) => {
+          const isCurrent = btn.getAttribute('data-nav') === target;
+          const underline = btn.querySelector('.nav-underline');
+          if (isCurrent) {
+            btn.classList.remove('font-medium', 'text-neutral-700');
+            btn.classList.add('font-bold', 'text-charcoal');
+            if (underline) underline.classList.remove('scale-x-0');
+            if (underline) underline.classList.add('scale-x-100');
+          } else {
+            btn.classList.add('font-medium', 'text-neutral-700');
+            btn.classList.remove('font-bold', 'text-charcoal');
+            if (underline) underline.classList.add('scale-x-0');
+            if (underline) underline.classList.remove('scale-x-100');
+          }
+        });
+
+        // Update mobile navigation active state
+        mobileNavLinks.forEach((btn) => {
+          const isCurrent = btn.getAttribute('data-nav') === target;
+          if (isCurrent) {
+            btn.classList.add('bg-neutral-300/80', 'font-bold', 'text-charcoal');
+          } else {
+            btn.classList.remove('bg-neutral-300/80', 'font-bold', 'text-charcoal');
+          }
+        });
+
+        // Close mobile menu if open
+        closeMobileMenu();
+
+        // Update URL hash cleanly
+        if (updateHash && window.location.hash !== `#${target}`) {
+          history.pushState(null, '', `#${target}`);
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Attach click handlers to all [data-nav] elements
+      document.querySelectorAll('[data-nav]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetPage = el.getAttribute('data-nav');
+          navigateTo(targetPage);
+        });
+      });
+
+      // Mobile menu toggle handlers
+      function closeMobileMenu() {
+        mobileMenu.classList.add('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        iconMenuOpen.classList.remove('hidden');
+        iconMenuClose.classList.add('hidden');
+      }
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'true');
+          iconMenuOpen.classList.add('hidden');
+          iconMenuClose.classList.remove('hidden');
+        } else {
+          closeMobileMenu();
+        }
+      });
+
+      // Handle browser back/forward buttons
+      window.addEventListener('hashchange', () => {
+        const hashPage = window.location.hash.replace('#', '');
+        navigateTo(hashPage || 'home', false);
+      });
+
+      // Toast helper
+      const toastContainer = document.getElementById('toast-container');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMessage = document.getElementById('toast-message');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastClose = document.getElementById('toast-close');
+      let toastTimer = null;
+
+      function showToast(title, message, isError = false) {
+        toastTitle.textContent = title;
+        toastMessage.textContent = message;
+
+        if (isError) {
+          toastIcon.className = 'w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5';
+          toastIcon.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg>';
+        } else {
+          toastIcon.className = 'w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5';
+          toastIcon.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+        }
+
+        toastContainer.classList.remove('translate-y-4', 'opacity-0');
+        toastContainer.classList.add('translate-y-0', 'opacity-100');
+
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(hideToast, 5000);
+      }
+
+      function hideToast() {
+        toastContainer.classList.add('translate-y-4', 'opacity-0');
+        toastContainer.classList.remove('translate-y-0', 'opacity-100');
+      }
+
+      toastClose.addEventListener('click', hideToast);
+
+      // Reservation Form Submission
+      const reservationForm = document.getElementById('reservation-form');
+      reservationForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('res-name').value.trim();
+        const phone = document.getElementById('res-phone').value.trim();
+        const date = document.getElementById('res-date').value.trim();
+        const time = document.getElementById('res-time').value.trim();
+
+        if (!name || !phone || !date || !time) {
+          showToast('Missing Details', 'Please fill in your name, phone number, date, and time to reserve a table.', true);
+          return;
+        }
+
+        showToast(
+          'Reservation Confirmed!',
+          `Thank you, ${name}. Your table is booked for ${date} at ${time}. We will reach out at ${phone} if needed.`
+        );
+        reservationForm.reset();
+        document.getElementById('res-date').type = 'text';
+        document.getElementById('res-time').type = 'text';
+      });
+
+      // Social icon click feedback
+      document.querySelectorAll('.social-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const label = btn.getAttribute('aria-label') || 'TasteHub Social';
+          showToast('Connect With Us', `Opening ${label} (@tastehub.sl)`);
+        });
+      });
+
+      // Initialize initial page from hash or default to Home
+      const initialPage = window.location.hash.replace('#', '') || 'home';
+      navigateTo(initialPage, false);
+    })();
+  </script>
+</body>
+</html>
